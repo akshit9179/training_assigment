@@ -1,0 +1,117 @@
+question1.Reverse Integer
+answer-
+object Solution {
+    def reverse(x: Int): Int = {
+  val maxInt = Int.MaxValue / 10
+  val minInt = Int.MinValue / 10
+  var rev = 0
+  var num = x
+  while (num != 0) {
+    val digit = num % 10
+    num /= 10
+    if (rev > maxInt || (rev == maxInt && digit > 7)) return 0
+    if (rev < minInt || (rev == minInt && digit < -8)) return 0
+    rev = rev * 10 + digit
+  }
+  rev
+}
+}
+
+question2.Palindrome Number
+answer-
+object Solution {
+    def isPalindrome(x: Int): Boolean = {
+        var reversedNumber = 0
+        var n = x
+    while (n > 0) 
+    {
+        reversedNumber = reversedNumber * 10 + n % 10
+        n = n / 10
+    }
+  if (x==reversedNumber)
+    {
+      true
+    }
+  else
+    {
+        false
+    }
+}
+}
+
+question3.Integer to Roman
+answer-
+object Solution {
+    def intToRoman(num: Int): String = {
+        val symbols = List(("M", 1000), ("CM", 900), ("D", 500), ("CD", 400), ("C", 100), ("XC", 90), ("L", 50), ("XL", 40), ("X", 10), ("IX", 9), ("V", 5), ("IV", 4), ("I", 1))
+        var result = ""
+        var n = num
+        for ((symbol, value) <- symbols) {
+            while (n >= value) {
+                result += symbol
+                n -= value
+            }
+        }
+        return result
+    }
+}
+
+question4.,Longest Common Prefix
+answer-
+object Solution {
+       def longestCommonPrefix(strs: Array[String]): String = {
+  if (strs.isEmpty) {
+    return ""
+  }
+
+  val firstStr = strs(0)
+  val prefixBuilder = new StringBuilder()
+
+  for (i <- 0 until firstStr.length) {
+    val char = firstStr(i)
+
+    for (j <- 1 until strs.length) {
+      if (i >= strs(j).length || strs(j)(i) != char) {
+        return prefixBuilder.toString()
+      }
+    }
+
+    prefixBuilder += char
+  }
+
+  prefixBuilder.toString()
+}
+}
+
+question5.Letter Combinations of a Phone Number
+answer-
+object Solution {
+    val phoneMap = Map(
+        '2' -> "abc",
+        '3' -> "def",
+        '4' -> "ghi",
+        '5' -> "jkl",
+        '6' -> "mno",
+        '7' -> "pqrs",
+        '8' -> "tuv",
+        '9' -> "wxyz"
+    )
+    
+    def letterCombinations(digits: String): List[String] = {
+        if (digits.isEmpty) return List()
+        val result = collection.mutable.ListBuffer[String]()
+        dfs(digits, "", result)
+        result.toList
+    }
+    
+    def dfs(digits: String, combination: String, result: collection.mutable.ListBuffer[String]): Unit = {
+        if (digits.isEmpty) {
+            result += combination
+        } else {
+            val letters = phoneMap(digits(0))
+            for (i <- 0 until letters.length) {
+                dfs(digits.substring(1), combination + letters(i), result)
+            }
+        }
+    }
+}
